@@ -1,3 +1,4 @@
+#lasagna
 import sqlite3
 
 DATABASE = "jazz.db"
@@ -39,9 +40,10 @@ def print_all_artists():
     sql = "SELECT * FROM artist"
     cursor.execute(sql)
     results = cursor.fetchall()
-    print(f"{'Name':<40}{'Birth Year':<15}{'Death Year':<15}{'Primary Instrument':<20}")
+    print(f"{'Name':<30}{'Birth Year':<15}{'Death Year':<15}{'Primary Instrument':<20}")
+    print('-' * 80)
     for artist in results:
-        print(f"{artist[1]:<40}{artist[2]:<15}{artist[3]:<15}{artist[4]:<20}")
+        print(f"{artist[1]:<30}{artist[2]:<15}{artist[3]:<15}{artist[4]:<20}")
     db.close()
 
 #print songs by requested artist
@@ -83,7 +85,7 @@ def print_album_by_selected_subgenre():
                 print(f"{title}  RELEASED: {year}") 
     else:
         print('Invalid Input.')
-    db.close
+    db.close()
 
 # Main menu loop
 while True:
@@ -97,7 +99,6 @@ while True:
             print_songs_by_artist()
         else:
             print('Invalid Input')
-        break
     elif user_input == "2":
         #sub menu
         potato = input("What would you like to browse \n1. Browse all albums \n2. Browse albums through selected sub-genre\n")
@@ -107,12 +108,10 @@ while True:
             print_album_by_selected_subgenre()
         else:
             print('Invalid Selection')
-        break
     elif user_input == "3":
         print_all_artists()
-        break
     elif user_input == "4":
         print("Goodbye!")
         break
     else:
-        print('That was not an option. BITCH ASS NIGGAAAAAAAA')
+        print('That was not an option. ')
