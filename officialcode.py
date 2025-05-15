@@ -54,6 +54,7 @@ def print_songs_by_artist():
     artist_name = input('Enter the artist\'s name (or type "Exit" to quit):\n').strip().upper()
     if artist_name == "EXIT":
         return
+    #create the sql statement to pick blah blah
     sql = "SELECT song.title, song.composer FROM song INNER JOIN artist ON song.artist_id = artist.artist_id WHERE UPPER(artist.name) = ?"
     cursor.execute(sql, (artist_name,))  
     results = cursor.fetchall() 
