@@ -8,13 +8,12 @@ def print_all_songs():
     '''Prints all jazz songs nicely.'''
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
-    sql = "SELECT song.title, artist.name, song.composer FROM song INNER JOIN artist ON song.artist_id = artist.artist_id"
+    sql = "SELECT * FROM song"
     cursor.execute(sql)
     results = cursor.fetchall()
-    print(f"{'Song Name':<40}{'Artist':<25}{'Composer'}")
-    print('-' * 75)
+    print(f"{'Song Name':<40}{'Album ID':<10}{'Duration':<10}{'Composer':<20}{'Artist ID':<10}")
     for jazz in results:
-        print(f"{jazz[0]:<40}{jazz[1]:<25}{jazz[2]}")
+        print(f"{jazz[1]:<40}{jazz[2]:<10}{jazz[3]:<10}{jazz[4]:<20}{jazz[5]:<10}")
     db.close()
 
 #print all the albums
@@ -48,22 +47,39 @@ def print_all_artists():
 def print_songs_by_artist():
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
+    
     # Ask the user for the artist's name
     artist_name = input('Enter the artist\'s name (or type "Exit" to quit):\n').strip().upper()
     if artist_name == "EXIT":
         return
-    sql = "SELECT song.title, artist.name FROM song INNER JOIN artist ON song.artist_id = artist.artist_id WHERE UPPER(artist.name) = ?"
+    
+#print songs by requested artist
+def print_songs_by_artist():
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    
+    # Ask the user for the artist's name
+    artist_name = input('Enter the artist\'s name (or type "Exit" to quit):\n').strip().upper()
+    if artist_name == "EXIT":
+        return
+    
+    # Fetch the songs along with their composers for the given artist
+    sql = "SELECT song.title, song.composer FROM song INNER JOIN artist ON song.artist_id = artist.artist_id WHERE UPPER(artist.name) = ?"
     cursor.execute(sql, (artist_name,))  
     results = cursor.fetchall() 
+
     if results:
         print(f"\nSongs by {artist_name}:")
-        print(f"{'Song Name':<40}{'Artist':<30}")
+        print(f"{'Song Name':<40}{'Composer'}")
         print('-' * 60)
-        for song, artist in results:
-            print(f"{song:<40}{artist:<30}")
+        for song, composer in results:
+            print(f"{song:<40}{composer}")
     else:
         print(f"No songs found for the artist '{artist_name}'")
+    
     db.close()
+
+
 
 def print_album_by_selected_subgenre():
     db = sqlite3.connect(DATABASE)
@@ -80,7 +96,7 @@ def print_album_by_selected_subgenre():
             print(f"\nAlbums in the subgenre '{selected_subgenre}':")
             print('-' * 50)
             for title, year in results:
-                print(f"{title}  RELEASED: {year}") 
+                print(f"{title} ({year})") 
     else:
         print('Invalid Input.')
     db.close
@@ -115,4 +131,4 @@ while True:
         print("Goodbye!")
         break
     else:
-        print('That was not an option. BITCH ASS NIGGAAAAAAAA')
+        print('That was not an option. ')
