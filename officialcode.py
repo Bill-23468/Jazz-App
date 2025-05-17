@@ -7,6 +7,7 @@ DATABASE = "jazz.db"
 #print all the songs
 def print_all_songs():
     '''Prints all jazz songs nicely.'''
+    # Connect to the database and create a cursor for executing SQL queries
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
     sql = "SELECT song.title, artist.name, song.composer FROM song INNER JOIN artist ON song.artist_id = artist.artist_id"
@@ -21,6 +22,7 @@ def print_all_songs():
 #print all the albums
 def print_all_albums():
     '''Prints all jazz albums nicely.'''
+    # Connect to the database and create a cursor for executing SQL queries
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
     sql = "SELECT * FROM album"
@@ -35,6 +37,7 @@ def print_all_albums():
 #print all the artist
 def print_all_artists():
     '''Prints all jazz artists nicely.'''
+    # Connect to the database and create a cursor for executing SQL queries
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
     sql = "SELECT * FROM artist"
@@ -48,6 +51,8 @@ def print_all_artists():
 
 #print songs by requested artist
 def print_songs_by_artist():
+    '''Prints all songs by desired artist'''
+    # Connect to the database and create a cursor for executing SQL queries
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
     # Ask the user for the artist's name
@@ -68,11 +73,15 @@ def print_songs_by_artist():
         print(f"No songs found for the artist '{artist_name}'")
     db.close()
 
+#print albums by selected sug-genre
 def print_album_by_selected_subgenre():
+    '''Print albums by desired sub-genre'''
+    # Connect to the database and create a cursor for executing SQL queries
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
+    #list of sub-genres
     subgenre_list = {'1': 'Bebop','2': 'Hard Bop','3': 'Cool Jazz','4': 'Big Band','5': 'Jazz-Funk','6': 'Modal Jazz','7': 'Swing','8': 'Spiritual Jazz'}
-
+    # Ask user for sub-genre that tickles their fancy
     subgenre = input('Which subgenre would you like to browse? \n1. Bebop \n2. Hard Bop \n3. Cool Jazz \n4. Big Band \n5. Jazz-Funk \n6. Modal Jazz \n7. Swing \n8. Spiritual Jazz\n')
     selected_subgenre = subgenre_list.get(subgenre)
     if selected_subgenre:
